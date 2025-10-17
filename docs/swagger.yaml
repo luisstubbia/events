@@ -1,0 +1,165 @@
+basePath: /
+definitions:
+  http.CreateEventRequest:
+    properties:
+      description:
+        example: This is a description
+        type: string
+      end_time:
+        example: "2025-10-20T10:00:00Z"
+        type: string
+      start_time:
+        example: "2025-10-17T00:00:00Z"
+        type: string
+      title:
+        example: This is a title
+        maxLength: 100
+        type: string
+    required:
+    - end_time
+    - start_time
+    - title
+    type: object
+  http.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  model.Event:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      end_time:
+        type: string
+      id:
+        type: string
+      start_time:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@eventservice.com
+    name: API Support
+  description: A RESTful API service for managing events built with Go and PostgreSQL
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Event Service API
+  version: "1.0"
+paths:
+  /events:
+    get:
+      consumes:
+      - application/json
+      description: Get all events ordered by start time in ascending order
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of events
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/model.Event'
+              type: array
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: List all events
+      tags:
+      - events
+    post:
+      consumes:
+      - application/json
+      description: Create a new event with the provided details
+      parameters:
+      - description: Event creation data
+        in: body
+        name: event
+        required: true
+        schema:
+          $ref: '#/definitions/http.CreateEventRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Event created successfully
+          schema:
+            $ref: '#/definitions/model.Event'
+        "400":
+          description: Invalid input data
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Create a new event
+      tags:
+      - events
+  /events/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a specific event by its UUID
+      parameters:
+      - description: Event ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Event found
+          schema:
+            $ref: '#/definitions/model.Event'
+        "400":
+          description: Invalid UUID format
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "404":
+          description: Event not found
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Get event by ID
+      tags:
+      - events
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Check if the service is healthy
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Service status
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "503":
+          description: Service unavailable
+          schema:
+            $ref: '#/definitions/http.ErrorResponse'
+      summary: Health check endpoint
+      tags:
+      - health
+schemes:
+- http
+swagger: "2.0"
