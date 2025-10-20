@@ -96,7 +96,7 @@ go install github.com/swaggo/swag/cmd/swag@latest
 export PATH=$PATH:$(go env GOPATH)/bin
 
 # Generate Swagger documentation
-swag init -g main.go
+swag init -g cmd/server/main.go
 
 # Install application dependencies
 go mod tidy
@@ -107,10 +107,10 @@ go mod tidy
 ```
 bash
 # Run directly with Go
-go run main.go
+go run cmd/server/main.go
 
 # Or build and run
-go build -o events main.go
+go build -o events cmd/server/main.go
 ./events
 ```
 Using Environment Variables
@@ -130,7 +130,7 @@ go run main.go
 ```
 bash
 # Build for production
-go build -ldflags="-s -w" -o events main.go
+go build -ldflags="-s -w" -o events cmd/server/main.go
 
 # Run with production settings
 ./events
