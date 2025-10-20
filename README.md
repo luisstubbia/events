@@ -29,7 +29,7 @@ A robust RESTful API service for managing events, built with Go and PostgreSQL. 
 ```
 bash 
 git clone <repository-url> 
-cd event-service
+cd events
 ```
 
 ### 2. Set Up PostgreSQL
@@ -110,8 +110,8 @@ bash
 go run main.go
 
 # Or build and run
-go build -o event-service main.go
-./event-service
+go build -o events main.go
+./events
 ```
 Using Environment Variables
 ```
@@ -130,10 +130,10 @@ go run main.go
 ```
 bash
 # Build for production
-go build -ldflags="-s -w" -o event-service main.go
+go build -ldflags="-s -w" -o events main.go
 
 # Run with production settings
-./event-service
+./events
 ```
 
 ## 📊 API Endpoints
@@ -207,7 +207,7 @@ http://localhost:8080/swagger/doc.json
 ```
 bash
 git clone <repository-url>
-cd event-service
+cd events
 ```
 2. Start the complete stack:
 ```
@@ -217,7 +217,7 @@ docker-compose up -d
 3. View logs:
 ```
 bash
-docker-compose logs -f event-service
+docker-compose logs -f events
 ```
 4. Stop the stack:
 ```
@@ -228,7 +228,7 @@ docker-compose down
 ```
 bash
 # Build the Docker image
-docker build -t event-service .
+docker build -t events .
 
 # Run the container
 docker run -p 8080:8080 \
@@ -237,7 +237,7 @@ docker run -p 8080:8080 \
   -e DB_USER=eventdbuser \
   -e DB_PASSWORD=password \
   -e DB_NAME=eventsdb \
-  event-service
+  events
   ```
 
 ### Docker Compose Configuration
