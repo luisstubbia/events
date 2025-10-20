@@ -123,7 +123,7 @@ DB_USER=eventdbuser \
 DB_PASSWORD=password \
 DB_NAME=eventsdb \
 DB_SSLMODE=disable \
-go run main.go
+go run cmd/server/main.go
 ```
 
 ### Production Mode
